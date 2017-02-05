@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.custom.i18n.resources" value="cn.cua.action.msg" />
+	<constant name="struts.multipart.maxSize" value="104857600" />
+
+
+	<constant name="struts.action.excludePattern" value="/WebSocketDemo.*?" />
+	<package name="bupt_cua_test" namespace="/" extends="struts-default,json-default">
+
+		<action name="homepage_load" class="cn.cua.action.HomePageAction"
+			method="load">
+			<result name="success">/webpage/homepage.jsp</result>
+		</action>
+
+		<action name="cdpage_loadCity" class="cn.cua.action.CityDescriptionPageAction"
+			method="loadCity">
+			<result name="success">/webpage/mainpage/line_guide/line_guide1.jsp
+			</result>
+		</action>
+
+		<action name="sffirstpage_loadStrategy" class="cn.cua.action.StrategyFileFirstPageAction"
+			method="loadStrategy">
+			<result name="success">/webpage/mainpage/gonglve/gonglve.jsp</result>
+		</action>
+
+		<action name="sfdownload_loadStrategy" class="cn.cua.action.StrategyFileDownloadPageAction"
+			method="loadStrategy">
+			<result name="success">/webpage/mainpage/gonglve/gl_download.jsp
+			</result>
+			<result name="sfFailed" type="redirectAction">
+				<param name="actionName">homepage_load</param>
+			</result>
+		</action>
+
+		<action name="sfdownload_download" class="cn.cua.action.StrategyFileDownloadPageAction"
+			method="download">
+			<result name="download" type="stream">
+				<param name="contentType">${type}</param>
+				<param name="contentDisposition">attachment;filename=${frameName}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+
+		<action name="sfdownload_downloadZip" class="cn.cua.action.StrategyFileDownloadPageAction"
+			method="downloadZip">
+			<result name="download" type="stream">
+				<param name="contentType">${type}</param>
+				<param name="contentDisposition">attachment;filename=${frameName}</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+
+		<action name="cd_loadCity" class="cn.cua.action.CityPageAction"
+			method="loadCity">
+			<result name="success">/webpage/mainpage/destination_recom/destination.jsp
+			</result>
+		</action>
+
+		<action name="cd_searchCity" class="cn.cua.action.CityPageAction"
+			method="searchCity">
+			<result name="searchCitySucc" type="redirectAction">
+				<param name="actionName">cdpage_loadCity</param>
+				<param name="cityName">${search}</param>
+			</result>
+			<result name="searchCityFailed" type="redirectAction">
+				<param name="actionName">cd_loadCity</param>
+			</result>
+		</action>
+
+		<action name="sfdownload_searchStrategy" class="cn.cua.action.StrategyFileFirstPageAction"
+			method="searchStrategy">
+			<result name="searchStrategySucc" type="redirectAction">
+				<param name="actionName">sfdownload_loadStrategy</param>
+				<param name="cityName">${search}</param>
+			</result>
+			<result name="searchStrategyFailed" type="redirectAction">
+				<param name="actionName">sffirstpage_loadStrategy</param>
+			</result>
+		</action>
+
+		<action name="productPage_*" class="cn.cua.action.ProductPageAction"
+			method="{1}">
+			<result name="pageIsTop" type="redirectAction">
+				<param name="actionName">productPage_findAllIsTop</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="isTopList">/webpage/mainpage/chanpin/product.jsp</result>
+			<result name="pagePrice" type="redirectAction">
+				<param name="actionName">productPage_findAllPrice</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="isPrice">/webpage/mainpage/chanpin/product_price.jsp
+			</result>
+			<result name="pageIsTopSearch" type="redirectAction">
+				<param name="actionName">productPage_findAllSearchIsTop</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="search">${search}</param>
+			</result>
+
+			<result name="pageIsTopSearchFailed" >/webpage/mainpage/chanpin/fail.jsp</result>
+			<result name="isTopListSearch">/webpage/mainpage/chanpin/product_search.jsp
+			</result>
+			<result name="pagePriceSearch" type="redirectAction">
+				<param name="actionName">productPage_findAllSearchPrice</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="search">${search}</param>
+			</result>
+			<result name="pagePriceSearchFailed" type="redirectAction">
+				<param name="actionName">productPage_pageIsTop</param>
+			</result>
+			<result name="priceListSearch">/webpage/mainpage/chanpin/product_searchPrice.jsp
+			</result>
+		</action>
+		<action name="productCityPage_*" class="cn.cua.action.ProductCityPageAction"
+			method="{1}">
+			<result name="pageIsTop" type="redirectAction">
+				<param name="actionName">productCityPage_findAllIsTop</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="cityName">${cityName}</param>
+				
+			</result>
+			<result name="isTopList">/webpage/mainpage/chanpin/product2.jsp</result>
+			<result name="pagePrice" type="redirectAction">
+				<param name="actionName">productCityPage_findAllPrice</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="cityName">${cityName}</param>
+			</result>
+			<result name="priceList">/webpage/mainpage/chanpin/product2_price.jsp
+			</result>
+			<result name="pageIsTopFailed" type="redirectAction">
+				<param name="actionName">productPage_pageIsTop</param>
+			</result>
+		</action>
+		<action name="productDescription_loadProduct" class="cn.cua.action.ProductDescriptionPageAction"
+			method="loadProduct">
+			<result name="productSucc">/webpage/mainpage/chanpin2/product3.jsp</result>
+		</action>
+		<action name="travelNotePublish_*" class="cn.cua.action.TravelNotePublishPageAction"
+			method="{1}">
+			<result name="publishSucc">/webpage/mainpage/youji3/travelNote3.jsp</result>
+		</action>
+		<action name="travelNoteFirstPage_*" class="cn.cua.action.TravelNoteFirstPageAction"
+			method="{1}">
+			<result name="pageIsTop" type="redirectAction">
+				<param name="actionName">travelNoteFirstPage_findAllIsTop</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+
+
+			<result name="isTopList">/webpage/mainpage/youji1/travelNote1.jsp</result>
+			<result name="pagePublicTime" type="redirectAction">
+				<param name="actionName">travelNoteFirstPage_findAllPublicTime</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="publicTimeList">/webpage/mainpage/youji1/travelNote1_publictime.jsp
+			</result>
+		</action>
+		<action name="travelNoteThirdPage_*" class="cn.cua.action.TravelNoteThirdPageAction"
+			method="{1}">
+			<result name="loadTravelNoteSucc">/webpage/mainpage/youji3/travelNote3.jsp</result>
+		</action>
+
+		<action name="travelNoteSecondPage_*" class="cn.cua.action.TravelNoteSecondPageAction"
+			method="{1}">
+			<result name="pageIsTop" type="redirectAction">
+				<param name="actionName">travelNoteSecondPage_findAllIsTop</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="cityName">${cityName}</param>
+			</result>
+			<result name="isTopList">/webpage/mainpage/youji2/travelNote2.jsp</result>
+			<result name="pageIsTopFailed" type="redirectAction">
+				<param name="actionName">travelNoteFirstPage_pageIsTop</param>
+			</result>
+			<result name="pagePublicTime" type="redirectAction">
+				<param name="actionName">travelNoteSecondPage_findAllPublicTime</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="cityName">${cityName}</param>
+			</result>
+			<result name="publicTimeList">/webpage/mainpage/youji2/travelNote2_publicTime.jsp
+			</result>
+		</action>
+
+
+
+
+		<action name="wenda_*" class="cn.cua.action.QuestionPageAction"
+			method="{1}">
+			<result name="success">/webpage/mainpage/wenda/wenda.jsp</result>
+			<result name="list">/webpage/mainpage/wenda/wenda.jsp</result>
+
+			<result name="pageQuestion" type="redirectAction">
+				<param name="actionName">wenda_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="quesCont">${quesCont}</param>
+			</result>
+			<result name="listQuery">/webpage/mainpage/wenda/wenda_list.jsp</result>
+
+			<result name="page" type="redirectAction">
+				<param name="actionName">wenda_findPage</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="quesCont">${quesCont}</param>
+			</result>
+		</action>
+
+		<action name="business_login" class="cn.cua.action.BuserAction" method="login">
+			<result name="success_boss">
+				/login_business/home.jsp
+			</result>
+			<result name="success_assistant">/login_business/home.jsp</result>
+			<result name="Buser_login">/login/businesslogin.jsp</result>
+		</action>
+		
+		<!-- ############################################################  -->
+		
+		<action name="buser_*" class="cn.cua.action.BuserAction" method="{1}">
+			<result name="loginSucc">/login/home.jsp</result>
+			<result name="login">/login/login.jsp</result>
+			<result name="page" type="redirectAction">
+				<param name="actionName">buser_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/admin_listFailed.jsp</result>
+			<result name="pageQuery" type="redirectAction">
+				<param name="actionName">buser_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qBuserName">${qBuserName}</param>
+				<param name="qBuserRole">${qBuserRole}</param>
+			</result>
+			<result name="pageQuery1" type="redirectAction">
+				<param name="actionName">buser_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qBuserName">${qBuserName}</param>
+				<param name="qBuserRole">${qBuserRole}</param>
+			</result>
+			<result name="list">/mngsystem_business/buser_list.jsp</result>
+			<result name="listQuery">/mngsystem_business/buser_listQuery.jsp</result>
+			<result name="pageSucc" type="redirectAction">buser_page</result>
+			<result name="edit">/mngsystem_business/buser_edit.jsp</result>
+			<result name="view">/mngsystem_business/buser_view.jsp</result>
+			<result name="add">/mngsystem_business/buser_add.jsp</result>
+			<result name="input">/mngsystem_business/buser_{1}.jsp</result>
+		</action>
+		
+		<!-- ############################################################  -->
+		
+		<action name="user_login" class="cn.cua.action.UserAction" method="login">
+			<result name="success" type="redirectAction"><param name="actionName">homepage_load</param></result>
+			<result name="user_login">/login/userlogin.jsp</result>
+		</action>
+		
+		<action name="admin_*" class="cn.cua.action.AdminAction"
+			method="{1}">
+			<result name="loginSucc">/login/home.jsp</result>
+			<result name="login">/login/login.jsp</result>
+			<result name="page" type="redirectAction">
+				<param name="actionName">admin_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/admin_listFailed.jsp</result>
+			<result name="pageQuery" type="redirectAction">
+				<param name="actionName">admin_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qadminNumber">${qadminNumber}</param>
+				<param name="qadminName">${qadminName}</param>
+				<param name="qadminSex">${qadminSex}</param>
+				<param name="qadminDepartment">${qadminDepartment}</param>
+				<param name="qadminRole">${qadminRole}</param>
+			</result>
+			<result name="pageQuery1" type="redirectAction">
+				<param name="actionName">admin_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qadminNumber">${qadminNumber}</param>
+				<param name="qadminName">${qadminName}</param>
+				<param name="qadminSex">${qadminSex}</param>
+				<param name="qadminDepartment">${qadminDepartment}</param>
+				<param name="qadminRole">${qadminRole}</param>
+			</result>
+			<result name="list">/mngsystem/admin_list.jsp</result>
+			<result name="listQuery">/mngsystem/admin_listQuery.jsp</result>
+			<result name="pageSucc" type="redirectAction">admin_page</result>
+			<result name="edit">/mngsystem/admin_edit.jsp</result>
+			<result name="view">/mngsystem/admin_view.jsp</result>
+			<result name="add">/mngsystem/admin_add.jsp</result>
+			<result name="input">/mngsystem/admin_{1}.jsp</result>
+		</action>
+		<action name="td_*" class="cn.cua.action.TravelDestinationAction"
+			method="{1}">
+			<result name="loadForAddSucc">/mngsystem/td_add.jsp</result>
+			<result name="page" type="redirectAction">
+				<param name="actionName">td_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/td_listFailed.jsp</result>
+			<result name="list">/mngsystem/td_list.jsp</result>
+			<result name="pageSucc" type="redirectAction">td_page</result>
+			<result name="edit">/mngsystem/td_edit.jsp</result>
+			<result name="add">/mngsystem/td_add.jsp</result>
+			<result name="view">/mngsystem/td_view.jsp</result>
+			<result name="pageQuery" type="redirectAction">
+				<param name="actionName">td_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qcityName">${qcityName}</param>
+				<param name="qisPublic">${qisPublic}</param>
+				<param name="qprovince">${qprovince}</param>
+				<param name="qarea">${qarea}</param>
+				<param name="qtopSeason">${qtopSeason}</param>
+				<param name="qthemeType">${qthemeType}</param>
+				<param name="qhomeOrAbroad">${qhomeOrAbroad}</param>
+				<param name="qisTopSeason">${qisTopSeason}</param>
+				<param name="qisHomeThemeType">${qisHomeThemeType}</param>
+				<param name="qisThemeType">${qisThemeType}</param>
+				<param name="qisHomeTopSeason">${qisHomeTopSeason}</param>
+			</result>
+			<result name="pageQuery1" type="redirectAction">
+				<param name="actionName">td_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qcityName">${qcityName}</param>
+				<param name="qisPublic">${qisPublic}</param>
+				<param name="qprovince">${qprovince}</param>
+				<param name="qarea">${qarea}</param>
+				<param name="qtopSeason">${qtopSeason}</param>
+				<param name="qthemeType">${qthemeType}</param>
+				<param name="qhomeOrAbroad">${qhomeOrAbroad}</param>
+				<param name="qisTopSeason">${qisTopSeason}</param>
+				<param name="qisHomeThemeType">${qisHomeThemeType}</param>
+				<param name="qisThemeType">${qisThemeType}</param>
+				<param name="qisHomeTopSeason">${qisHomeTopSeason}</param>
+			</result>
+			<result name="listQuery">/mngsystem/td_listQuery.jsp</result>
+			<result name="editOrderComplete" type="redirectAction">td_findAllForEditOrder
+			</result>
+			<result name="forwardOrderInput" type="redirectAction">td_findAllForEditOrder
+			</result>
+			<result name="backwardOrderInput" type="redirectAction">td_findAllForEditOrder
+			</result>
+			<result name="listForEditOrder">/mngsystem/td_editOrder.jsp</result>
+			<result name="listForEditOrderFailed">/mngsystem/td_editOrderFailed.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">jpg,png,gif,jpeg</param>
+			</interceptor-ref>
+		</action>
+
+		<action name="question_*" class="cn.cua.action.QuestionAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">question_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/question_listFailed.jsp</result>
+			<result name="queryPage" type="redirectAction">
+				<param name="actionName">question_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="quesName">${quesName}</param>
+				<param name="quesContent">${quesContent}</param>
+			</result>
+			<result name="queryPage1" type="redirectAction">
+				<param name="actionName">question_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="quesName">${quesName}</param>
+				<param name="quesContent">${quesContent}</param>
+			</result>
+			<result name="list">/mngsystem/question_list.jsp</result>
+			<result name="queryList">/mngsystem/question_queryList.jsp</result>
+			<result name="editSucc" type="redirectAction">question_page</result>
+			<result name="view">/mngsystem/question_view.jsp</result>
+			<result name="edit">/mngsystem/question_edit.jsp</result>
+			<result name="findAll" type="redirectAction">question_findAll</result>
+			<result name="editOrderComplete" type="redirectAction">question_findAllForEditOrder
+			</result>
+			<result name="forwardOrderInput" type="redirectAction">question_findAllForEditOrder
+			</result>
+			<result name="backwardOrderInput" type="redirectAction">question_findAllForEditOrder
+			</result>
+			<result name="listForEditOrder">/mngsystem/question_editOrder.jsp</result>
+			<result name="listForEditOrderFailed">/mngsystem/question_editOrderFailed.jsp</result>
+		</action>
+
+		<action name="travelNote_*" class="cn.cua.action.TravelNoteAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">travelNote_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/travelNote_listFailed.jsp</result>
+			<result name="queryPage" type="redirectAction">
+				<param name="actionName">travelNote_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="tnName">${tnName}</param>
+				<param name="tnStatus">${tnStatus}</param>
+				<param name="tnIsTop">${tnIsTop}</param>
+				<param name="tnCityName">${tnCityName}</param>
+			</result>
+			<result name="queryPage1" type="redirectAction">
+				<param name="actionName">travelNote_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="tnName">${tnName}</param>
+				<param name="tnStatus">${tnStatus}</param>
+				<param name="tnIsTop">${tnIsTop}</param>
+				<param name="tnCityName">${tnCityName}</param>
+			</result>
+			<result name="list">/mngsystem/travelNote_list.jsp</result>
+			<result name="queryList">/mngsystem/travelNote_queryList.jsp</result>
+			<result name="editSucc" type="redirectAction">travelNote_page</result>
+			<result name="view">/mngsystem/travelNote_view.jsp</result>
+			<result name="edit">/mngsystem/travelNote_edit.jsp</result>
+			<result name="findAll" type="redirectAction">travelNote_findAll</result>
+		</action>
+
+		<action name="strategyFile_*" class="cn.cua.action.StrategyFileAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">strategyFile_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/strategy_listFailed.jsp</result>
+			<result name="pageQuery" type="redirectAction">
+				<param name="actionName">strategyFile_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qcityName">${qcityName}</param>
+			</result>
+			<result name="pageQuery1" type="redirectAction">
+				<param name="actionName">strategyFile_query</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="qcityName">${qcityName}</param>
+			</result>
+			<result name="list">/mngsystem/strategy_list.jsp</result>
+			<result name="listQuery">/mngsystem/strategy_listQuery.jsp</result>
+			<result name="pageSucc" type="redirectAction">strategyFile_page</result>
+			<result name="edit">/mngsystem/strategy_edit.jsp</result>
+			<result name="view">/mngsystem/strategy_view.jsp</result>
+			<result name="input">/mngsystem/strategy_{1}.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">bmp,pcx,tiff,gif,jpg,png,gif,jpeg,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,hdri,raw,pdf,rar,zip</param>
+			</interceptor-ref>
+		</action>
+		<action name="topPhoto_*" class="cn.cua.action.TopPhotoAction" method="{1}">
+			<result name="loadForAddSucc">/mngsystem/topPhoto_add.jsp</result>
+			<result name="page" type="redirectAction">
+				<param name="actionName">topPhoto_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/topPhoto_listFailed.jsp</result>
+			<result name="list">/mngsystem/topPhoto_list.jsp</result>
+			<result name="pageSucc" type="redirectAction">topPhoto_page</result>
+			<result name="edit">/mngsystem/topPhoto_edit.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">bmp,pcx,tiff,gif,jpg,png,gif,jpeg,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,hdri,raw</param>
+			</interceptor-ref>
+			<result name="input">/mngsystem/topPhoto_{1}.jsp</result>
+		</action>
+		<action name="strategyTopPhoto_*" class="cn.cua.action.StrategyTopPhotoAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">strategyTopPhoto_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/strategyTopPhoto_listFailed.jsp
+			</result>
+			<result name="list">/mngsystem/strategyTopPhoto_list.jsp</result>
+			<result name="pageSucc" type="redirectAction">strategyTopPhoto_page</result>
+			<result name="edit">/mngsystem/strategyTopPhoto_edit.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">bmp,pcx,tiff,gif,jpg,png,gif,jpeg,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,hdri,raw</param>
+			</interceptor-ref>
+			<result name="input">/mngsystem/strategyTopPhoto_{1}.jsp</result>
+		</action>
+		<action name="travelnoteTopPhoto_*" class="cn.cua.action.TravelnoteTopPhotoAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">travelnoteTopPhoto_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/travelnoteTopPhoto_listFailed.jsp
+			</result>
+			<result name="list">/mngsystem/travelnoteTopPhoto_list.jsp</result>
+			<result name="pageSucc" type="redirectAction">travelnoteTopPhoto_page</result>
+			<result name="edit">/mngsystem/travelnoteTopPhoto_edit.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">bmp,pcx,tiff,gif,jpg,png,gif,jpeg,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,hdri,raw</param>
+			</interceptor-ref>
+			<result name="input">/mngsystem/travelnoteTopPhoto_{1}.jsp</result>
+		</action>
+
+		<action name="tdTopPhoto_*" class="cn.cua.action.TdTopPhotoAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">tdTopPhoto_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalpage">${totalpage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/tdTopPhoto_listFailed.jsp</result>
+			<result name="list">/mngsystem/tdTopPhoto_list.jsp</result>
+			<result name="pageSucc" type="redirectAction">tdTopPhoto_page</result>
+			<result name="edit">/mngsystem/tdTopPhoto_edit.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">bmp,pcx,tiff,gif,jpg,png,gif,jpeg,tga,exif,fpx,svg,psd,cdr,pcd,dxf,ufo,eps,ai,hdri,raw</param>
+			</interceptor-ref>
+			<result name="input">/mngsystem/tdTopPhoto_{1}.jsp</result>
+		</action>
+
+		<action name="product_*" class="cn.cua.action.ProductAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">product_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem/product_listFailed.jsp</result>
+			<result name="queryPage" type="redirectAction">
+				<param name="actionName">product_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="proName">${proName}</param>
+				<param name="proDescription">${proDescription}</param>
+				<param name="proCityName">${proCityName}</param>
+				<param name="topOrNot">${topOrNot}</param>
+			</result>
+			<result name="queryPage1" type="redirectAction">
+				<param name="actionName">product_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="proName">${proName}</param>
+				<param name="proDescription">${proDescription}</param>
+				<param name="proCityName">${proCityName}</param>
+				<param name="topOrNot">${topOrNot}</param>
+			</result>
+			<result name="list">/mngsystem/product_list.jsp</result>
+			<!-- <result name="journeyList">/mngsystem/product_edit.jsp</result> -->
+			<result name="journeyList" type="redirectAction">
+				<param name="actionName">product_loadForEdit</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="queryList">/mngsystem/product_queryList.jsp</result>
+
+			<result name="addJourney" type="dispatcher">
+				<param name="location">/mngsystem/journey_add.jsp</param>
+				<param name="proDays">${proDays}</param>
+				<param name="proName">${proName}</param>
+			</result>
+			<result name="deleteJourney" type="redirectAction">
+				<param name="actionName">product_deleteJourney</param>
+			</result>
+			<result name="editJourney" type="dispatcher">
+				<param name="location">/mngsystem/journey_edit.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="editSucc" type="redirectAction">product_page</result>
+			<result name="view">/mngsystem/product_view.jsp</result>
+			<result name="edit" type="dispatcher">
+				<param name="location">/mngsystem/product_edit.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="loadForAdd" type="dispatcher">
+				<param name="location">/mngsystem/journey_add1.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="loadForEdit" type="redirectAction">
+				<param name="actionName">product_loadForEdit</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="addInput">/mngsystem/product_add.jsp</result>
+			<result name="addJourneyInput">/mngsystem/journey_add.jsp</result>
+			<result name="editInput">/mngsystem/product_edit.jsp</result>
+			<result name="editJourneyInput">/mngsystem/journey_edit.jsp</result>
+		</action>
+		<!--                                                                            -->
+		<action name="comment_*" class="cn.cua.action.CommentInfoAction"
+			method="{1}">
+			<result name="list">/mngsystem/comment_queryList.jsp</result>
+			<result name="page" type="redirectAction">
+				<param name="actionName">comment_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="queryPage" type="redirectAction">
+				<param name="actionName">comment_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="queryPage1" type="redirectAction">
+				<param name="actionName">comment_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="delete_succ">/mngsystem/comment_page</result>
+			<result name="view">/mngsystem/comment_view.jsp</result>
+		</action>
+		<!--                                                                    -->
+		
+		
+		<action name="businessproduct_*" class="cn.cua.action.BusinessProductAction"
+			method="{1}">
+			<result name="page" type="redirectAction">
+				<param name="actionName">businessproduct_findAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+			</result>
+			<result name="pageFailed">/mngsystem_business/product_listFailed.jsp</result>
+			<result name="queryPage" type="redirectAction">
+				<param name="actionName">businessproduct_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="proName">${proName}</param>
+				<param name="proDescription">${proDescription}</param>
+				<param name="proCityName">${proCityName}</param>
+				<param name="topOrNot">${topOrNot}</param>
+			</result>
+			<result name="queryPage1" type="redirectAction">
+				<param name="actionName">businessproduct_queryFindAll</param>
+				<param name="pageNum">${pageNum}</param>
+				<param name="totalPage">${totalPage}</param>
+				<param name="pageSize">${pageSize}</param>
+				<param name="proName">${proName}</param>
+				<param name="proDescription">${proDescription}</param>
+				<param name="proCityName">${proCityName}</param>
+				<param name="topOrNot">${topOrNot}</param>
+			</result>
+			<result name="list">/mngsystem_business/product_list.jsp</result>
+			<!-- <result name="journeyList">/mngsystem/product_edit.jsp</result> -->
+			<result name="journeyList" type="redirectAction">
+				<param name="actionName">businessproduct_loadForEdit</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="queryList">/mngsystem_business/product_queryList.jsp</result>
+	
+			<result name="addJourney" type="dispatcher">
+				<param name="location">/mngsystem_business/journey_add.jsp</param>
+				<param name="proDays">${proDays}</param>
+				<param name="proName">${proName}</param>
+			</result>
+			<result name="deleteJourney" type="redirectAction">
+				<param name="actionName">businessproduct_deleteJourney</param>
+			</result>
+			<result name="editJourney" type="dispatcher">
+				<param name="location">/mngsystem_business/journey_edit.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="editSucc" type="redirectAction">businessproduct_page</result>
+			<result name="view">/mngsystem_business/product_view.jsp</result>
+			<result name="edit" type="dispatcher">
+				<param name="location">/mngsystem_business/product_edit.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="loadForAdd" type="dispatcher">
+				<param name="location">/mngsystem_business/journey_add1.jsp</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="loadForEdit" type="redirectAction">
+				<param name="actionName">businessproduct_loadForEdit</param>
+				<param name="proName">${proName}</param>
+				<param name="proId">${proId}</param>
+			</result>
+			<result name="addInput">/mngsystem_business/product_add.jsp</result>
+			<result name="addJourneyInput">/mngsystem_business/journey_add.jsp</result>
+			<result name="editInput">/mngsystem_business/product_edit.jsp</result>
+			<result name="editJourneyInput">/mngsystem_business/journey_edit.jsp</result>
+		</action>
+		
+		
+		
+		
+		
+
+		<action name="theme_*" class="cn.cua.action.ThemeAction"
+			method="{1}">
+			<result name="list">/mngsystem/theme_list.jsp</result>
+			<result name="listFailed">/mngsystem/theme_listFailed.jsp</result>
+			<result name="editSucc" type="redirectAction">theme_findAll</result>
+			<result name="edit">/mngsystem/theme_edit.jsp</result>
+			<result name="addInput">/mngsystem/theme_add.jsp</result>
+			<result name="editInput">/mngsystem/theme_edit.jsp</result>
+		</action>
+		
+
+		<action name="register" class="cn.cua.action.RegisterAction">
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		
+		<action name="GetUsrname" class="cn.cua.action.JsonUserNameAction">
+			<result type="json">
+			</result>
+		</action>
+		
+		<action name="logout" class="cn.cua.action.UserAction" method="logout">
+			<result name="homepage" type="chain">homepage_load</result>
+			<result name="business_login">/login/businesslogin.jsp</result>
+		</action>
+		
+
+		<action name="CustomerLogin" class="cn.cua.action.ChatLoginAction" method="customerLogin">
+		    <result name="success">/customerchat.jsp</result>
+		</action>
+		
+		<action name="CusserviceLogin" class="cn.cua.action.ChatLoginAction" method="cusserviceLogin">
+		    <result name="success">/cusservicechat.jsp</result>
+		</action>
+
+		<action name="AddNote" class="cn.cua.action.NoteAction" method="addNote">
+		    <result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="GetUnreadNote" class="cn.cua.action.NoteAction" method="getUnReadNote">
+		    <result name="success" type="json">
+				<param name="root">noteInfoList</param>
+			</result>
+		</action>
+		<action name="GetReadNote" class="cn.cua.action.NoteAction" method="getReadNote">
+		    <result name="success" type="json">
+				<param name="root">noteInfoList</param>
+			</result>
+		</action>
+		<action name="GetUnreadCount" class="cn.cua.action.NoteAction" method="getUnReadNoteNumber">
+		    <result name="success" type="json">
+				<param name="root">unReadNoteNum</param>
+			</result>
+		</action>
+		<action name="GetReadCount" class="cn.cua.action.NoteAction" method="getReadNoteNumber">
+		    <result name="success" type="json">
+				<param name="root">readNoteNum</param>
+			</result>
+		</action>
+		<action name="GetNote" class="cn.cua.action.NoteAction" method="getNoteByNoteId">
+		    <result name="success" type="json">
+				<param name="root">noteInfo</param>
+			</result>
+		</action>
+		<action name="ChangeStatus" class="cn.cua.action.NoteAction" method="changeStatus">
+		    <result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="DeleteNotes" class="cn.cua.action.NoteAction" method="deleteNotes">
+		    <result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="ChangeMultiStatus" class="cn.cua.action.NoteAction" method="changeMultiStatus">
+		    <result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="AddComment" class="cn.cua.action.CommentAction" method="addComment">
+			<result name="addSucc" type="json"></result>
+		</action>
+		<action name="LoadComment" class="cn.cua.action.CommentAction" method="loadComment">
+			<result name="loadSucc" type="json">
+				<param name="root">commentList</param>
+			</result>
+		</action>
+ 	</package>
+</struts>

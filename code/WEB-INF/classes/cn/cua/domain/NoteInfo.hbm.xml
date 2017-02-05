@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.cua.domain.NoteInfo" table="note_info" catalog="cua_test">
+        <id name="noteId">
+            <generator class="native"></generator>
+        </id>
+        <property name="businessId"></property>
+        <property name="customername"></property>
+        <property name="telephone"></property>
+        <property name="email"></property>
+        <property name="note"></property>
+        <property name = "status"></property>
+        <property name = "time"></property>
+    </class>
+</hibernate-mapping>

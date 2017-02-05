@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/cua_test?characterEncoding=utf-8</property>
+
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">chenchen</property>
+		
+		<!-- 配置数据库方言 不同 数据库 SQL 不完全一样-->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		
+		<!-- 常用属性 -->
+		<!-- 在控制台打印生成的SQL语句 -->
+		<property name="hibernate.show_sql">false</property>
+		<!-- 对控制台输出SQL语句进行格式化，为了方便阅读 -->
+		<property name="hibernate.format_sql">true</property>
+		<!-- 可以自动根据类生成DDL 建表语言，完成自动建表 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<!-- 配置默认事务自动提交 -->
+		<property name="hibernate.connection.autocommit">true</property>
+		
+		<!-- 配置session与当前线程绑定 -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		<mapping resource="cn/cua/domain/AdminInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TravelDestinationInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/QuestionInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TravelNoteInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TravelNotePhotoInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/StrategyFileInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TopPhotoInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/StrategyTopPhotoInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TravelnoteTopPhotoInfo.hbm.xml"/>	
+		<mapping resource="cn/cua/domain/JourneyInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/ProductInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/ThemeInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/UserInfo.hbm.xml"/>
+		
+		<mapping resource="cn/cua/domain/TdTopPhotoInfo.hbm.xml"/>	
+		
+		<mapping resource="cn/cua/domain/CommentInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/BusinessInfo.hbm.xml"/>
+		
+		<mapping resource="cn/cua/domain/BuserInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/NoteInfo.hbm.xml"/>
+<!-- 		<mapping resource="cn/cua/domain/JourneyInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/ProductInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/StrategyFileInfo.hbm.xml"/>
+		<mapping resource="cn/cua/domain/TravelNoteInfo.hbm.xml"/>
+		 -->
+	</session-factory>
+
+</hibernate-configuration>

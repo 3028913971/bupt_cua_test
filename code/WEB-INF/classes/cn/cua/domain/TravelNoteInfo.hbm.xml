@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.TravelNoteInfo" table="travelnote_info" catalog="cua_test">
+		<id name="travelNoteId">
+			<generator class="native"></generator>
+		</id>
+		<property name="travelNoteName"></property>
+		<property name="travelNoteAuthor"></property>
+		<property name="travelNoteContent"></property>
+		<property name="publicTime"></property>
+		<property name="isTop"></property>
+		<property name="cityName"></property>
+		<property name="travelNoteFileName"></property>
+		<property name="travelNoteRealName"></property>
+		<property name="status"></property>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.ProductInfo" table="product_info" catalog="cua_test">
+		<id name="productId">
+			<!-- <generator class="native"></generator> -->
+		</id>
+		<property name="productName"></property>
+		<property name="productPrice"></property>
+		<property name="productCellphone"></property>
+		<property name="productDescription"></property>
+		<property name="productFileName"></property>
+		<property name="productRealName"></property>
+		<property name="isTop"></property>
+		<property name="isPublic"></property>
+		<property name="startDate"></property>
+		<property name="endDate"></property>
+		<property name="cityName"></property>
+		<property name="costDescription"></property>
+		<property name="productFeature"></property>
+		<property name="orderWeight"></property>
+		<property name="businessId"></property>
+
+	</class>
+</hibernate-mapping>

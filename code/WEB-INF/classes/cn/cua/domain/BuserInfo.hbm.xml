@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.BuserInfo" table="buser_info" catalog="cua_test">
+		<id name="buserId">
+			<generator class="native"></generator>
+		</id>
+		<property name="buserName"></property>
+		<property name="buserPasswd"></property>
+		<property name="buserMail"></property>
+		<property name="isActive"></property>
+		<property name="verifyCode"></property>
+		<property name="businessId"></property>
+		<property name="buserType"></property>
+	</class>
+</hibernate-mapping>
