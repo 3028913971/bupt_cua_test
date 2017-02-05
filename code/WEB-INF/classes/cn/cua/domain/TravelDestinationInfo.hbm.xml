@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.TravelDestinationInfo" table="traveldestination_info" catalog="cua_test">
+		<id name="cityName">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="tdOrder"></property>
+		<property name="province"></property>
+		<property name="area"></property>
+		<property name="topSeason"></property>
+		<property name="themeType"></property>
+		<property name="themeNickname"></property>
+		<property name="isHomeTopSeason"></property>
+		<property name="isTopSeason"></property>
+		<property name="isHomeThemeType"></property>
+		<property name="isThemeType"></property>
+		<property name="homeOrAbroad"></property>
+		<property name="description"></property>
+		<property name="cityPhotoFileName"></property>
+		<property name="cityPhotoRealName"></property>
+		<property name="trafficDescription"></property>
+		<property name="trafficPhotoFileName"></property>
+		<property name="trafficPhotoRealName"></property>
+		<property name="spotDescription"></property>
+		<property name="spotPhotoFileName"></property>
+		<property name="spotPhotoRealName"></property>
+		<property name="shoppingDescription"></property>
+		<property name="shoppingPhotoFileName"></property>
+		<property name="shoppingPhotoRealName"></property>
+		<property name="foodDescription"></property>
+		<property name="foodPhotoFileName"></property>
+		<property name="foodPhotoRealName"></property>
+		<property name="isPublic"></property>
+		 
+		
+		
+	</class>
+</hibernate-mapping>

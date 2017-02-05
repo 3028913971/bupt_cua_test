@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.StrategyFileInfo" table="strategyfile_info" catalog="cua_test">
+		<id name="strategyFileId">
+			<generator class="native"></generator>
+		</id>
+		<property name="strategyFileName"></property>
+		<property name="strategyFileRealName"></property>
+		<property name="strategyJpgName"></property>
+		<property name="strategyJpgRealName"></property>
+		<property name="strategyPhotoFileName"></property>
+		<property name="strategyPhotoRealName"></property>
+		<property name="amountOfDownload"></property>
+		<property name="updateTime"></property>
+		<property name="isTop"></property>
+		<property name="cityName"></property>
+
+	</class>
+</hibernate-mapping>

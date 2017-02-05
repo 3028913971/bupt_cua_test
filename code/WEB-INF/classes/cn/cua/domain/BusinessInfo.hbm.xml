@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.cua.domain.BusinessInfo" table="business_info" catalog="cua_test">
+		<id name="businessId">
+			<generator class="native"></generator>
+		</id>
+		<property name="businessName"></property>
+		<property name="businessPasswd"></property>
+		<property name="businessMail"></property>
+		<property name="isActive"></property>
+		<property name="verifyCode"></property>
+	</class>
+</hibernate-mapping>
