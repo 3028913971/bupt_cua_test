@@ -10,6 +10,12 @@ Windows10
 
 #Python
 python用的是python3.5.3（大概python2.7也可以用吧，不清楚，不能用的话告诉我一下，我再改改），
+（如果python2.7用不了的话，你可以简单地在文件最前面加上下面这三行抢救一下：
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+如果还是用不了就QQ上告诉我吧。
+）
 IDE是JetBrains PyCharm Community Edition 2016.3.2。
 python这边需要的库有：
 spyne，lxml，suds，pytz，都是用于发布webservice的，其中pytz是spyne的依赖。这些都可以用pip或者easy-install安装。
