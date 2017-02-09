@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="JAX-WS-Apache Axis">
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/saaj.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/commons-discovery-0.2.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/jaxrpc.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/wsdl4j-1.5.1.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/log4j-1.2.8.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/commons-logging-1.0.4.jar" />
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/axis.jar" />
+  </library>
+  <library name="junit-4.12">
+    <archive path="E:/project/jetbrains/idea/java/ir_web_service/lib/junit-4.12.jar" />
+  </library>
+</eclipse-userlibraries>
+
