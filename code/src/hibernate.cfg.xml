@@ -8,7 +8,7 @@
 		<property name="hibernate.connection.url">jdbc:mysql://localhost/cua_test?characterEncoding=utf-8</property>
 
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">6k7shabi</property>
+		<property name="hibernate.connection.password">cj129599</property>
 		
 		
 <!-- 				<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/cua_test?characterEncoding=utf-8</property> -->
