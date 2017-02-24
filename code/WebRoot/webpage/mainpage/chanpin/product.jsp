@@ -115,10 +115,19 @@
 				</div>
 			</s:form>
 			<s:form action="productPage_pageSearchTag" cssClass="search-form"
-				theme="simple">
+				theme="simple" enctype="multipart/form-data">
 				<div class="lm-index-search">
 					<s:textfield name="tag" cssClass="lm-search-text"
 						placeholder="请输入标签" />
+					<tr>
+					<td align="center" bgColor="#f5fafe" class="ta_01">
+						产品图片上传：
+					</td>
+					<td class="ta_01" bgColor="#ffffff">
+						<input type="file" name="file" value="" id="file" onchange="CheckPhotoType('file','产品图片','fileError')"/>
+						<span style="color:#ff0000;font-weight: 900;" id="fileError"/>
+					</td>
+					</tr>
 					<input id="tagSearchBtn" type="submit" class="lm-search-btn"
 						style="position: absolute;top: 7px;left: 202px;" value="go" />
 				</div>
