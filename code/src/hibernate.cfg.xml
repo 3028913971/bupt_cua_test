@@ -50,7 +50,8 @@
 		<mapping resource="cn/cua/domain/ProductInfo.hbm.xml"/>
 		<mapping resource="cn/cua/domain/ThemeInfo.hbm.xml"/>
 		<mapping resource="cn/cua/domain/UserInfo.hbm.xml"/>
-		
+		<mapping resource="cn/cua/domain/TagsInfo.hbm.xml"/>	
+		<mapping resource="cn/cua/domain/SubTagsInfo.hbm.xml"/>
 		<mapping resource="cn/cua/domain/TdTopPhotoInfo.hbm.xml"/>	
 		
 		<mapping resource="cn/cua/domain/CommentInfo.hbm.xml"/>

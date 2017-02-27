@@ -13,13 +13,14 @@ import cn.cua.domain.AdminInfo;
 import cn.cua.domain.ProductInfo;
 import cn.cua.domain.ThemeInfo;
 import cn.cua.service.ProductPageService;
+import cn.cua.service.TagService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class ProductPageAction extends ActionSupport {
 
 	private ProductPageService ppService = new ProductPageService();
-	
+	private TagService tService = new TagService();
 	private LinkedHashMap<ThemeInfo,List<String>> themeTypeList = new LinkedHashMap<ThemeInfo,List<String>>();//主题城市列表
 	private LinkedHashMap<String,List<String>> homeTDList = new LinkedHashMap<String,List<String>>();
 	private int amountOfProduct;
@@ -33,7 +34,7 @@ public class ProductPageAction extends ActionSupport {
 	private int totalpage;
 	private int pageSize;
 	
-	
+	private String tag2="";
 	public LinkedHashMap<ThemeInfo, List<String>> getThemeTypeList() {
 		return themeTypeList;
 	}
@@ -196,8 +197,10 @@ public class ProductPageAction extends ActionSupport {
 	 */
 	public String pageSearchTag(){
 		pageSize = 18;
-		int productAmount = ppService.getAmountOfTag(this.tag);
+		tag2=tService.fenci(tag).replaceAll(",,", ",");
+		int productAmount = ppService.getAmountOfTag(this.tag2);
 		if(productAmount == 0){
+			System.out.println("test1:fail");
 			return "pageIsTopSearchFailed";
 		}
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
@@ -228,7 +231,8 @@ public class ProductPageAction extends ActionSupport {
 		//search = (String)ServletActionContext.getRequest().getSession().getAttribute("search");//--
 		//search = new String(this.search.getBytes("ISO-8859-1"),"UTF-8");//++
 		pageSize = 18;
-		int productAmount = ppService.getAmountOfTag(tag);
+		if(tag2.isEmpty()) tag2=tService.fenci(tag).replaceAll(",,", ",");
+		int productAmount = ppService.getAmountOfTag(tag2);
 		//ServletActionContext.getRequest().getSession().setAttribute("search", search);//--
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
 		if(pageNum<=0){
@@ -261,7 +265,8 @@ public class ProductPageAction extends ActionSupport {
 	public String findAllSearchTag() throws UnsupportedEncodingException{
 		themeTypeList = ppService.findThemeTypeList();
 		homeTDList = ppService.findHomeTD();
-		isTopSearchProductList = ppService.findSearchTag(tag, pageNum, pageSize);
+		tag2=tService.fenci(tag).replaceAll(",,", ",");
+		isTopSearchProductList = ppService.findSearchTag(tag2, pageNum, pageSize);	
 		return "tagListSearch";
 	}
 	
