@@ -253,11 +253,12 @@ public class ProductPageAction extends ActionSupport {
 	        results = recognizer.predict(imageFile);
 	        Places205LabelConverter buptConverter = Places205LabelConverter.makeBUPTConverter("/home/ubuntu");
 	        for(int i=0;i<results.length;i++){
-	        	pictureRec+=buptConverter.convert(results[i].getLabel())+";";
+	        	pictureRec+=","+buptConverter.convert(results[i].getLabel());
 	        }
-	        this.tag+=pictureRec;
+	        
 		}
-    tag2=tService.fenci(tag).replaceAll(",,", ",");
+		tag2=tService.fenci(tag).replaceAll(",,", ",");
+		tag2+=pictureRec;
 		int productAmount = ppService.getAmountOfTag(this.tag2);
 		if(productAmount == 0){
 			System.out.println("test1:fail");
@@ -270,6 +271,7 @@ public class ProductPageAction extends ActionSupport {
 		if(pageNum>totalpage){
 			this.pageNum=totalpage;
 		}
+		pictureRec="";
 		return "pageTagSearch";
 	}
 	public String pageSearchIsTop1() throws UnsupportedEncodingException{
@@ -291,8 +293,8 @@ public class ProductPageAction extends ActionSupport {
 		//search = (String)ServletActionContext.getRequest().getSession().getAttribute("search");//--
 		//search = new String(this.search.getBytes("ISO-8859-1"),"UTF-8");//++
 		pageSize = 18;
-		if(
-      .isEmpty()) tag2=tService.fenci(tag).replaceAll(",,", ",");
+		if(tag2.isEmpty()) 
+			tag2=tService.fenci(tag).replaceAll(",,", ",");
 		int productAmount = ppService.getAmountOfTag(tag2);
 		//ServletActionContext.getRequest().getSession().setAttribute("search", search);//--
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
