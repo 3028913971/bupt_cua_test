@@ -629,6 +629,7 @@ public class BusinessProductAction extends ActionSupport implements ModelDriven<
 			model.setProductRealName(CommonUtils.uuid() +"." + fileFileName.split("\\.")[1]);
 			
 			File destFile = new File(savePath,model.getProductRealName());
+			//File destFile = new File(savePath,fileFileName);
 			FileUtils.copyFile(file, destFile);
 		}
 		//proDays =(Integer)ServletActionContext.getRequest().getSession().getAttribute("proDays");

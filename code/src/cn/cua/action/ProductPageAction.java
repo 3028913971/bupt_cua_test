@@ -1,5 +1,7 @@
 package cn.cua.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,15 +9,23 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.rpc.ServiceException;
+
+import org.andromedids.artifact.image_recognition.PredictResult;
+import org.andromedids.artifact.image_recognition.RemoteImageRecognizer;
+import org.andromedids.artifact.places205_labels_mapper.Places205LabelConverter;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import cn.cua.domain.AdminInfo;
 import cn.cua.domain.ProductInfo;
 import cn.cua.domain.ThemeInfo;
 import cn.cua.service.ProductPageService;
-import cn.cua.service.TagService;
 
+import cn.cua.service.TagService;
+import cn.itcast.utils.CommonUtils;
 import com.opensymphony.xwork2.ActionSupport;
+
 
 public class ProductPageAction extends ActionSupport {
 
@@ -34,7 +44,34 @@ public class ProductPageAction extends ActionSupport {
 	private int totalpage;
 	private int pageSize;
 	
+
 	private String tag2="";
+
+  
+	//上传的图片用
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
+	
+	
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public String getFileContentType() {
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType; 
+	}  
 	public LinkedHashMap<ThemeInfo, List<String>> getThemeTypeList() {
 		return themeTypeList;
 	}
@@ -194,10 +231,33 @@ public class ProductPageAction extends ActionSupport {
 	/**
 	 * 搜索分页-标签搜索
 	 * @return
+	 * @throws IOException 
+	 * @throws ServiceException 
 	 */
-	public String pageSearchTag(){
+	public String pageSearchTag() throws IOException, ServiceException{
 		pageSize = 18;
-		tag2=tService.fenci(tag).replaceAll(",,", ",");
+    
+		PredictResult[] results = null;
+		String pictureRec="";
+		if(this.file!=null){
+			//上传文件
+			System.out.println("lalalala=================================");
+			System.out.println(fileFileName);
+			System.out.println(CommonUtils.uuid() +"." + fileFileName.split("\\.")[1]);
+			String savePath = ServletActionContext.getServletContext().getRealPath("/productFiles");
+			//File destFile = new File(savePath,CommonUtils.uuid() +"." + fileFileName.split("\\.")[1]);  //用编码过后的文件名
+			File destFile = new File(savePath,"test.jpg");// 用本来的文件名
+			FileUtils.copyFile(this.file, destFile);
+			RemoteImageRecognizer recognizer = new RemoteImageRecognizer();
+	        String imageFile = "/home/ubuntu/Tomcat/webapps/bupt_cua_test/productFiles/test.jpg";
+	        results = recognizer.predict(imageFile);
+	        Places205LabelConverter buptConverter = Places205LabelConverter.makeBUPTConverter("/home/ubuntu");
+	        for(int i=0;i<results.length;i++){
+	        	pictureRec+=buptConverter.convert(results[i].getLabel())+";";
+	        }
+	        this.tag+=pictureRec;
+		}
+    tag2=tService.fenci(tag).replaceAll(",,", ",");
 		int productAmount = ppService.getAmountOfTag(this.tag2);
 		//System.out.println("test:"+productAmount);
 		if(productAmount == 0){
@@ -231,7 +291,8 @@ public class ProductPageAction extends ActionSupport {
 		//search = (String)ServletActionContext.getRequest().getSession().getAttribute("search");//--
 		//search = new String(this.search.getBytes("ISO-8859-1"),"UTF-8");//++
 		pageSize = 18;
-		if(tag2.isEmpty()) tag2=tService.fenci(tag).replaceAll(",,", ",");
+		if(
+      .isEmpty()) tag2=tService.fenci(tag).replaceAll(",,", ",");
 		int productAmount = ppService.getAmountOfTag(tag2);
 		//ServletActionContext.getRequest().getSession().setAttribute("search", search);//--
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
