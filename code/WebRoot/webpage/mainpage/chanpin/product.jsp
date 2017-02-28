@@ -31,7 +31,36 @@
 </script>
 <!-- 百度统计代码 -->
 </head>
-
+<style>
+.file {
+    position: absolute;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+	top:500px;
+	right:800px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+</style>
 <body>
 	<%@ include file="../../head.jsp"%>
 	<div class="qyWrap">
@@ -123,7 +152,7 @@
 					<td align="center" bgColor="#f5fafe" class="ta_01">
 						产品图片上传：
 					</td>
-					<td class="ta_01" bgColor="#ffffff">
+					<td class="file" bgColor="#ffffff">
 						<input type="file" name="file" value="" id="file" onchange="CheckPhotoType('file','产品图片','fileError')"/>
 						<span style="color:#ff0000;font-weight: 900;" id="fileError"/>
 					</td>

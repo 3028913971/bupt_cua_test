@@ -13,6 +13,7 @@ import javax.xml.rpc.ServiceException;
 
 import org.andromedids.artifact.image_recognition.PredictResult;
 import org.andromedids.artifact.image_recognition.RemoteImageRecognizer;
+import org.andromedids.artifact.places205_labels_mapper.Places205LabelConverter;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
@@ -231,6 +232,7 @@ public class ProductPageAction extends ActionSupport {
 	public String pageSearchTag() throws IOException, ServiceException{
 		pageSize = 18;
 		PredictResult[] results = null;
+		String pictureRec="";
 		if(this.file!=null){
 			//上传文件
 			System.out.println("lalalala=================================");
@@ -243,8 +245,12 @@ public class ProductPageAction extends ActionSupport {
 			RemoteImageRecognizer recognizer = new RemoteImageRecognizer();
 	        String imageFile = "/home/ubuntu/Tomcat/webapps/bupt_cua_test/productFiles/test.jpg";
 	        results = recognizer.predict(imageFile);
-	        if(results[0].getLabel().equalsIgnoreCase("/i/iceberg 100"))
-				this.tag+="1";
+	        Places205LabelConverter buptConverter = Places205LabelConverter.makeBUPTConverter("/home/ubuntu");
+	        for(int i=0;i<results.length;i++){
+	        	pictureRec+=buptConverter.convert(results[i].getLabel())+";";
+	        }
+	        //pictureRec+=buptConverter.convert(results[0].getLabel());
+	        this.tag+=pictureRec;
 		}
 		
 		
