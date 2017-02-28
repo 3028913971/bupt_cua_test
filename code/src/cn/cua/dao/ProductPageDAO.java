@@ -210,7 +210,6 @@ public class ProductPageDAO {
 	 */
 	public int getAmountOfTag(String tag){
 		//组合查询	
-		System.out.println("test:getAmountOfTag");
 				Session session = HibernateUtils.openSession();
 				Transaction transaction = session.beginTransaction(); 
 				
@@ -221,9 +220,8 @@ public class ProductPageDAO {
 				session.close();
 				ArrayList<ProductInfo> templist = new ArrayList<ProductInfo>();
 				for(int i=0;i<list.size();i++)
-					if(juge(list.get(i).getTags(),tag)>temp.length/2+1) templist.add(list.get(i));
-				System.out.println("test:"+templist.size());
-				return templist.size();
+					if(juge(list.get(i).getTags(),tag)>temp.length/4+1) templist.add(list.get(i));
+				return templist.size()-1;
 	}
 	/**
 	 * 产品推荐首页-搜索热门产品
@@ -254,7 +252,6 @@ public class ProductPageDAO {
 	 */
 	public List<ProductInfo> findSearchTag(String tag,int pageNum,int pageSize){
 		//组合查询	
-		System.out.println("test:findSearchTag");
 		Session session = HibernateUtils.openSession();
 		Transaction transaction = session.beginTransaction(); 
 		
@@ -265,12 +262,10 @@ public class ProductPageDAO {
 		session.close();
 		ArrayList<ProductInfo> templist = new ArrayList<ProductInfo>();
 		for(int i=0;i<list.size();i++)
-			if(juge(list.get(i).getTags(),tag)>temp.length/2+1) templist.add(list.get(i));
+			if(juge(list.get(i).getTags(),tag)>temp.length/4+1) templist.add(list.get(i));
 		double[] imp=new double[temp.length];//权重默认为相等的1.0
 		Arrays.fill(imp,1.0);
 		shakersort(templist,change(tag),imp);
-		for(int i=0;i<templist.size();i++)
-			System.out.println("test:templist:"+i+templist.get(i).getProductName());
 		return templist.subList((pageNum-1)*pageSize, ((pageNum-1)*pageSize+pageSize)>templist.size()-1? templist.size()-1:((pageNum-1)*pageSize+pageSize));
 	}
 	public static int juge(String s1,String s2){//s1为当前产品标签序列，s2为搜索标签序列，返回s1中包含的s2标签数量
