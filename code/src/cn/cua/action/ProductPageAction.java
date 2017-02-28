@@ -199,8 +199,8 @@ public class ProductPageAction extends ActionSupport {
 		pageSize = 18;
 		tag2=tService.fenci(tag).replaceAll(",,", ",");
 		int productAmount = ppService.getAmountOfTag(this.tag2);
+		//System.out.println("test:"+productAmount);
 		if(productAmount == 0){
-			System.out.println("test1:fail");
 			return "pageIsTopSearchFailed";
 		}
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
