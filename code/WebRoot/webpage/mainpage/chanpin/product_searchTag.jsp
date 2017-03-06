@@ -137,6 +137,12 @@
 						theme="simple">
 						<s:param name="productId" value="productId" />
 						<div class="list-surface">城市玩乐 | ${cityName }</div>
+						<div class="wenzi-cell-description">
+							<div class="wenzi-cell-description-wenzi">
+									  <h4> 商品简介</h4><div style=" text-indent:2em">
+									  <div class="wenzi-cell-description-s" ><s:property value="productDescription"/></div></div>
+									   </div>
+									</div>
 						<div class="list-tuwen">
 							<img src='<c:url value="/productFiles/${productRealName}"/>'
 								data-original="http://pic.qyer.com/public/supplier/lastminute/2015/07/29/14381504497218/339x226"

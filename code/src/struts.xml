@@ -112,6 +112,7 @@
 				<param name="totalpage">${totalpage}</param>
 				<param name="pageSize">${pageSize}</param>
 				<param name="tag">${tag}</param>
+				<param name="pictureRec">${pictureRec}</param>
 			</result>
 			
 			<result name="pageIsTopSearchFailed" >/webpage/mainpage/chanpin/fail.jsp</result>

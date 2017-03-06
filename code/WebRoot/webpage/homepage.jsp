@@ -287,9 +287,8 @@
 			<form action="productPage_pageSearchTag"  enctype="multipart/form-data" align="center"> 
 				
 				
-				<input type="text" id="oText" style="border:5px dotted red;color:red" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" name="tag" cssClass=""
+				<input type="text" name= "tag" id="oText" style="border:5px dotted red;color:red" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" name="tag" cssClass=""
 						placeholder="请输入产品关键词" />
-				
 				<br/>
 				<br/>
 				<br/>
@@ -300,7 +299,7 @@
 				</tr>
 				
 				<tr>
-					<td class="filestyle" bgColor="#ffffff">
+					<td class="ta_01" bgColor="#ffffff">
 						<input type="file" name="file" value="上传图片" id="file" onchange="CheckPhotoType('file','产品图片','fileError')"/>
 					</td>
 					<input id="tagSearchBtn" type="submit" class=""

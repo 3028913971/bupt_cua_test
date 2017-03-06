@@ -46,7 +46,8 @@ public class ProductPageAction extends ActionSupport {
 	
 
 	private String tag2="";
-
+	private String pictureRec="";
+	PredictResult[] results = null;
   
 	//上传的图片用
 	private File file;
@@ -54,6 +55,13 @@ public class ProductPageAction extends ActionSupport {
 	private String fileContentType;
 	
 	
+	
+	public String getPictureRec() {
+		return pictureRec;
+	}
+	public void setPictureRec(String pictureRec) {
+		this.pictureRec = pictureRec;
+	}
 	public File getFile() {
 		return file;
 	}
@@ -237,8 +245,7 @@ public class ProductPageAction extends ActionSupport {
 	public String pageSearchTag() throws IOException, ServiceException{
 		pageSize = 18;
     
-		PredictResult[] results = null;
-		String pictureRec="";
+		
 		if(this.file!=null){
 			//上传文件
 			System.out.println("lalalala=================================");
@@ -253,12 +260,25 @@ public class ProductPageAction extends ActionSupport {
 	        results = recognizer.predict(imageFile);
 	        Places205LabelConverter buptConverter = Places205LabelConverter.makeBUPTConverter("/home/ubuntu");
 	        for(int i=0;i<results.length;i++){
-	        	pictureRec+=","+buptConverter.convert(results[i].getLabel());
+	        	pictureRec+=buptConverter.convert(results[i].getLabel())+",";
 	        }
+	        //if(buptConverter.convert(results[0].getLabel())=="2")
+	        	//pictureRec+="17";
 	        
 		}
 		tag2=tService.fenci(tag).replaceAll(",,", ",");
-		tag2+=pictureRec;
+		if(!pictureRec.isEmpty()){
+			if(tag2.isEmpty()){
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			else{
+				tag2+=",";
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			}
+		if(pictureRec.isEmpty()){
+			tag2+="1";
+		}
 		int productAmount = ppService.getAmountOfTag(this.tag2);
 		//System.out.println("test:"+productAmount);
 		if(productAmount == 0){
@@ -271,7 +291,7 @@ public class ProductPageAction extends ActionSupport {
 		if(pageNum>totalpage){
 			this.pageNum=totalpage;
 		}
-		pictureRec="";
+		//pictureRec="";
 		return "pageTagSearch";
 	}
 	public String pageSearchIsTop1() throws UnsupportedEncodingException{
@@ -289,12 +309,46 @@ public class ProductPageAction extends ActionSupport {
 		}
 		return "pageIsTopSearch";
 	}
-	public String pageSearchTag1() throws UnsupportedEncodingException{
+	public String pageSearchTag1() throws IOException, ServiceException{
 		//search = (String)ServletActionContext.getRequest().getSession().getAttribute("search");//--
 		//search = new String(this.search.getBytes("ISO-8859-1"),"UTF-8");//++
 		pageSize = 18;
+		
+		if(this.file!=null){
+			//上传文件
+			System.out.println("lalalala=================================");
+			System.out.println(fileFileName);
+			System.out.println(CommonUtils.uuid() +"." + fileFileName.split("\\.")[1]);
+			String savePath = ServletActionContext.getServletContext().getRealPath("/productFiles");
+			//File destFile = new File(savePath,CommonUtils.uuid() +"." + fileFileName.split("\\.")[1]);  //用编码过后的文件名
+			File destFile = new File(savePath,"test.jpg");// 用本来的文件名
+			FileUtils.copyFile(this.file, destFile);
+			RemoteImageRecognizer recognizer = new RemoteImageRecognizer();
+	        String imageFile = "/home/ubuntu/Tomcat/webapps/bupt_cua_test/productFiles/test.jpg";
+	        results = recognizer.predict(imageFile);
+	        Places205LabelConverter buptConverter = Places205LabelConverter.makeBUPTConverter("/home/ubuntu");
+	        /*for(int i=0;i<results.length;i++){
+	        	pictureRec+=buptConverter.convert(results[i].getLabel())+",";
+	        }*/
+	        if(buptConverter.convert(results[0].getLabel())=="2")
+	        	pictureRec+="17";
+	        
+		}
+		
 		if(tag2.isEmpty()) 
 			tag2=tService.fenci(tag).replaceAll(",,", ",");
+		
+		
+		if(!pictureRec.isEmpty()){
+			if(tag2.isEmpty()){
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			else{
+				tag2+=",";
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			}
+		
 		int productAmount = ppService.getAmountOfTag(tag2);
 		//ServletActionContext.getRequest().getSession().setAttribute("search", search);//--
 		this.totalpage = productAmount%pageSize==0?(productAmount/pageSize):(productAmount/pageSize+1);
@@ -323,12 +377,24 @@ public class ProductPageAction extends ActionSupport {
 	/**
 	 * 搜索分页-标签搜索排序
 	 * @return
-	 * @throws UnsupportedEncodingException 
+	 * @throws IOException 
+	 * @throws ServiceException 
 	 */
-	public String findAllSearchTag() throws UnsupportedEncodingException{
+	public String findAllSearchTag() throws IOException, ServiceException{
 		themeTypeList = ppService.findThemeTypeList();
 		homeTDList = ppService.findHomeTD();
+		
 		tag2=tService.fenci(tag).replaceAll(",,", ",");
+		if(!pictureRec.isEmpty()){
+			if(tag2.isEmpty()){
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			else{
+				tag2+=",";
+				tag2+=pictureRec.subSequence(0, pictureRec.length()-1);
+				}
+			}
+		
 		isTopSearchProductList = ppService.findSearchTag(tag2, pageNum, pageSize);	
 		return "tagListSearch";
 	}
